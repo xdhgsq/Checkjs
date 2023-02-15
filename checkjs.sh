@@ -453,17 +453,24 @@ tongyong_config() {
 	wget_test=$( cat /tmp/wget_test.log | grep -o "200 OK")
 	if [ "$wget_test" == "200 OK" ];then
 		cd $File_path
-		if [ "$action2_if" == "2" ];then
+		if [ "$action2_if" == "2" && "$action3_if" == "2" ];then
 			old_git_commit=$(git log --format=format:"%h" --since="$action2 00:00:00" --before="$action2 23:59:59" -1)
+			git reset --hard $old_git_commit
+			ls ./ | grep -E 'js$|py$' | sort > $Oldfile
+
+			old_git_commit1=$(git log --format=format:"%h" --since="$action3 00:00:00" --before="$action3 23:59:59" -1)
+			git reset --hard $old_git_commit1
+			action2_num="($action2到$action3的仓库变化)"
+		elif [ "$action2_if" == "2" ];then
+			old_git_commit=$(git log --format=format:"%h" --since="$action2 00:00:00" --before="$action3 23:59:59" -1)
 			git reset --hard $old_git_commit
 			ls ./ | grep -E 'js$|py$' | sort > $Oldfile
 			action2_num="($action2到今天的仓库变化)"
 		else
-			echo "输入的日期不合规。例子输入2023-02-14获取2023-02-14当天的仓库变化"
+			git pull
+			init_data
 		fi
 
-		git pull
-		init_data
 		if [ $for_diff == "1" ];then
 			for_diff_cron
 		else
@@ -1636,6 +1643,7 @@ action1="$1"
 action2="$2"
 action2_if=$(echo "$action2" | grep -o "-" | wc -l)
 action3="$3"
+action3_if=$(echo "$action3" | grep -o "-" | wc -l)
 if [ -z $action1 ]; then
 	menu
 else
