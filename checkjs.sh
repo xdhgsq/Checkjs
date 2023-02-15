@@ -453,6 +453,7 @@ tongyong_config() {
 	wget_test=$( cat /tmp/wget_test.log | grep -o "200 OK")
 	if [ "$wget_test" == "200 OK" ];then
 		cd $File_path
+		git pull
 		if [ "$action2_if" == "2" ] && [ "$action3_if" == "2" ];then
 			old_git_commit=$(git log --format=format:"%h" --since="$action2 00:00:00" --before="$action2 23:59:59" -1)
 			git reset --hard $old_git_commit
@@ -467,8 +468,8 @@ tongyong_config() {
 			git reset --hard $old_git_commit
 			ls ./ | grep -E 'js$|py$' | sort > $Oldfile
 			action2_num="($action2到今天的仓库变化)"
-		else
 			git pull
+		else
 			init_data
 		fi
 
@@ -479,7 +480,6 @@ tongyong_config() {
 		fi
 		sendMessage
 		That_day
-		git pull
 	else
 		num="1"
 		eeror_num="1"
@@ -1251,6 +1251,7 @@ ACTIVITY_ID				jd_wxCollectionActivity2.js
 prodevactCode				jd_prodev.js
 
 #KingRan
+jd_sevenDay_activityUrl			jd_sevenDayjk.js
 jd_lzkj_loreal_cart_url			jd_lzkj_loreal_cart.js
 jd_lzkj_loreal_draw_url			jd_lzkj_loreal_draw.js
 jd_lzkj_loreal_followShop_url		jd_lzkj_loreal_followShop.js
@@ -1297,6 +1298,9 @@ SHARE_ACTIVITY_ID			jd_share.js
 EOF
 
 #常规变量
+#jd_sevenDayjk.js
+export COOKIE_NUM=$(cat $openwrt_script_config/jdCookie.js | grep "pt_key" | grep -v "pt_key=xxx" |wc -l)
+
 #jd_wxSecond.js
 export jd_wxSecond_addCart="true" #是否做加购任务，默认不做
 
@@ -1420,7 +1424,7 @@ export jd_drawCenter_addCart="true" #// 是否做加购任务，默认不做
 							echo "$variable_script_name值：为$variable_script_num不操作"
 						else
 							case "$variable_script_name" in
-							jd_lzkj_loreal_cart_url|jd_lzkj_loreal_draw_url|jd_lzkj_loreal_followShop_url|jd_zsz_activityId|jd_teamFLP_activityId|jd_showInviteJoin_activityUrl|jd_lzkj_loreal_invite_url|jd_wxSecond_activityId|jd_collect_shop_activityUrl|jd_collect_item_activityUrl|jd_wxKnowledgeActivity_activityUrl|jd_daily_activityId|jd_cjdaily_activityId|jd_wxCollectionActivity_activityUrl|jd_wxBuildActivity_activityId|jd_cjwxShopFollowActivity_activityId|jd_wxKnowledgeActivity_activityId|jd_cjwxKnowledgeActivity_activityId|jd_wxSecond_activityId|VENDER_ID|wish_appIdArrList|jd_mhurlList|comm_activityIDList|computer_activityId|jd_wdz_activityId|M_FOLLOW_SHOP_ARGV|VENDER_ID|PKC_TXGZYL|LUCK_DRAW_URL|DPLHTY|jd_cjhy_activityId|jd_zdjr_activityId|jd_wxShareActivity_activityId|jd_wxgame_activityId|jd_drawCenter_activityId|JD_Lottery)
+							jd_sevenDay_activityUrl|jd_lzkj_loreal_cart_url|jd_lzkj_loreal_draw_url|jd_lzkj_loreal_followShop_url|jd_zsz_activityId|jd_teamFLP_activityId|jd_showInviteJoin_activityUrl|jd_lzkj_loreal_invite_url|jd_wxSecond_activityId|jd_collect_shop_activityUrl|jd_collect_item_activityUrl|jd_wxKnowledgeActivity_activityUrl|jd_daily_activityId|jd_cjdaily_activityId|jd_wxCollectionActivity_activityUrl|jd_wxBuildActivity_activityId|jd_cjwxShopFollowActivity_activityId|jd_wxKnowledgeActivity_activityId|jd_cjwxKnowledgeActivity_activityId|jd_wxSecond_activityId|VENDER_ID|wish_appIdArrList|jd_mhurlList|comm_activityIDList|computer_activityId|jd_wdz_activityId|M_FOLLOW_SHOP_ARGV|VENDER_ID|PKC_TXGZYL|LUCK_DRAW_URL|DPLHTY|jd_cjhy_activityId|jd_zdjr_activityId|jd_wxShareActivity_activityId|jd_wxgame_activityId|jd_drawCenter_activityId|JD_Lottery)
 								export $i
 								cp $dir_file/KingRan_Script/$js_name1 ${script_dir}/$js_name1
 								echo "${script_dir}/$js_name1运行，当前时间`date`" >>/tmp/tg_run_script.log
