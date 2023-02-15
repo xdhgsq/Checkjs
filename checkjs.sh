@@ -453,7 +453,6 @@ tongyong_config() {
 	wget_test=$( cat /tmp/wget_test.log | grep -o "200 OK")
 	if [ "$wget_test" == "200 OK" ];then
 		cd $File_path
-		action2_if=$(echo "$action2" | grep -o "-" | wc -l)
 		if [ "$action2_if" == "2" ];then
 			old_git_commit=$(git log --format=format:"%h" --since="$action2 00:00:00" --before="$action2 23:59:59" -1)
 			git reset --hard $old_git_commit
@@ -929,10 +928,11 @@ system_variable() {
 time(){
 	#某个日期仓库与现在的变化
 	#１．获取当前日期
-	current time=$(date +%Y-%m-%d)
+	current_time=$(date +%Y-%m-%d)
 	#２．获取某一天前的仓库与现在对比（需要具体日期，openwrt 不支持此写法date +%Y-%m-%d -d '-52 day'）
 	if [ -z "$action2" ];then
-		echo "没有发现日期，例子输入2023-02-14获取2023-02-14当天的仓库变化"
+		clear
+		echo -e "${red}time命令没有发现日期，例子输入${green}sh \$checkjs time 2023-02-14${red}获取2023-02-14当天的仓库变化${white}"
 		exit 0
 	else
 		script
@@ -998,10 +998,13 @@ help() {
 	echo "2.无视当前时间规则推送"
 	echo " sh \$checkjs that_day_push"
 	echo ""
-	echo "3.删除当前的定时任务，暂时停止脚本"
+	echo "3.某个日期仓库与现在的变化"
+	echo " sh \$checkjs time 2023-01-01 (日期自己设置)"
+	echo ""
+	echo "4.删除当前的定时任务，暂时停止脚本"
 	echo " sh \$checkjs task_delete"
 	echo ""
-	echo "4.删除这个脚本所有创建的文件，包括脚本自己"
+	echo "5.删除这个脚本所有创建的文件，包括脚本自己"
 	echo "sh \$checkjs ds_setup"
 	echo ""
 }
@@ -1039,6 +1042,9 @@ run_script_if() {
 				echo -e "${yellow}》》当前时间：$current_time点，不符合你的设置，不自动运行脚本${white}"
 				auto_run="(有合适脚本,但时间不符合不跑)"
 			fi
+		elif [ "$action2_if" == "2" ];then
+			echo "这是在比较之前仓库，不做任何操作"
+			auto_run="(这是在比较之前仓库，不做任何操作)"
 		else
 			echo -e "script_date的字符：$script_date,进入下级判断"
 			run_script
@@ -1627,6 +1633,7 @@ echo "---------------------------------------------------------------------/n/n"
 
 action1="$1"
 action2="$2"
+action2_if=$(echo "$action2" | grep -o "-" | wc -l)
 action3="$3"
 if [ -z $action1 ]; then
 	menu
