@@ -453,11 +453,12 @@ tongyong_config() {
 	wget_test=$( cat /tmp/wget_test.log | grep -o "200 OK")
 	if [ "$wget_test" == "200 OK" ];then
 		cd $File_path
-		if [ "$action2_if" == "2" && "$action3_if" == "2" ];then
+		if [ "$action2_if" == "2" ] && [ "$action3_if" == "2" ];then
 			old_git_commit=$(git log --format=format:"%h" --since="$action2 00:00:00" --before="$action2 23:59:59" -1)
 			git reset --hard $old_git_commit
 			ls ./ | grep -E 'js$|py$' | sort > $Oldfile
 
+			git pull
 			old_git_commit1=$(git log --format=format:"%h" --since="$action3 00:00:00" --before="$action3 23:59:59" -1)
 			git reset --hard $old_git_commit1
 			action2_num="($action2到$action3的仓库变化)"
