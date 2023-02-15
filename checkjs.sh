@@ -453,10 +453,16 @@ tongyong_config() {
 	wget_test=$( cat /tmp/wget_test.log | grep -o "200 OK")
 	if [ "$wget_test" == "200 OK" ];then
 		cd $File_path
+		action2_if=$(echo "$action2" | grep -o "-" | wc -l)
+		if [ "$action2_if" == "2" ];then
+			old_git_commit=$(git log --format=format:"%h" --since="$action2 00:00:00" --before="$action2 23:59:59" -1)
+			git reset --hard $old_git_commit
+			ls ./ | grep -E 'js$|py$' | sort > $Oldfile
+		else
+			echo "输入的日期不合规。例子输入2023-02-14获取2023-02-14当天的仓库变化"
+		fi
+
 		git pull
-		#这里不要强制更新，不利于测试，如果对方删库，强制更新也会删除
-		#git fetch --all
-		#git reset --hard origin/$branch
 		init_data
 		if [ $for_diff == "1" ];then
 			for_diff_cron
@@ -920,20 +926,20 @@ system_variable() {
 	fi
 }
 
+time(){
+	#某个日期仓库与现在的变化
+	#１．获取当前日期
+	current time=$(date +%Y-%m-%d)
+	#２．获取某一天前的仓库与现在对比（需要具体日期，openwrt 不支持此写法date +%Y-%m-%d -d '-52 day'）
+	if [ -z "$action2" ];then
+		echo "没有发现日期，例子输入2023-02-14获取2023-02-14当天的仓库变化"
+		exit 0
+	else
+		script
+	fi
+}
 
-menu() {
-	description_if
-	checkjs_config_if
-	opencard_variable
-	echo "----------------------------------------------"
-	echo -e "$green Checkjs $version开始检查脚本新增或删除情况$white"
-	echo ""
-	echo -e "$yellow无视时间规则直接推送:$green sh \$checkjs that_day_push$white"
-	echo "----------------------------------------------"
-	echo -e "$green 当前时间：$white`date "+%Y-%m-%d %H:%M"`"
-	echo -e "$yellow 检测脚本是否最新:$white $Script_status "
-	echo "**********************************************"
-	echo > $dir_file/git_log/${current_time}.log
+script() {
 	KingRan_Script
 	yyds_Script
 	Github_6dylan6_Script
@@ -954,7 +960,22 @@ menu() {
 	ZCY01_Script
 	hundun
 	ZhiYi_Script
-	rm -rf $dir_file/shylocks_Script_gitee
+}
+
+menu() {
+	description_if
+	checkjs_config_if
+	opencard_variable
+	echo "----------------------------------------------"
+	echo -e "$green Checkjs $version开始检查脚本新增或删除情况$white"
+	echo ""
+	echo -e "$yellow无视时间规则直接推送:$green sh \$checkjs that_day_push$white"
+	echo "----------------------------------------------"
+	echo -e "$green 当前时间：$white`date "+%Y-%m-%d %H:%M"`"
+	echo -e "$yellow 检测脚本是否最新:$white $Script_status "
+	echo "**********************************************"
+	echo > $dir_file/git_log/${current_time}.log
+	script
 
 	if [ $(date +%H%M) == "1200" ];then
 		echo "12点开始推送今天的github更新记录"
@@ -1605,11 +1626,13 @@ echo "---------------------------------------------------------------------/n/n"
 
 
 action1="$1"
+action2="$2"
+action3="$3"
 if [ -z $action1 ]; then
 	menu
 else
 	case "$action1" in
-			update_script|system_variable|menu|that_day_push|help|task_delete|ds_setup|tg|rm_log)
+			time|update_script|system_variable|menu|that_day_push|help|task_delete|ds_setup|tg|rm_log)
 			$action1
 			;;
 			*)
