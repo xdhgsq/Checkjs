@@ -476,7 +476,7 @@ tongyong_config() {
 						else
 							$action2_m="01"
 							action2="${action2_y}-${action2_m}-${action2_d}"
-							old_git_commit=$(git log --format=format:"%h" --since="$action2 00:00:00" --before="$action2 23:59:59" -1)
+							old_git_commit=$(git log  branch_name --author="$branch" --format=format:"%h" --since="$action2 00:00:00" --before="$action2 23:59:59" -1)
 							if [ -z $old_git_commit ];then
 								echo ""
 							else
@@ -486,7 +486,7 @@ tongyong_config() {
 					else
 						action2_d=$(($action2_d + 1))
 						action2="${action2_y}-${action2_m}-${action2_d}"
-						old_git_commit=$(git log --format=format:"%h" --since="$action2 00:00:00" --before="$action2 23:59:59" -1)
+						old_git_commit=$(git log branch_name --author="$branch" --format=format:"%h" --since="$action2 00:00:00" --before="$action2 23:59:59" -1)
 						if [ -z $old_git_commit ];then
 							echo ""
 						else
@@ -502,11 +502,11 @@ tongyong_config() {
 			ls ./ | grep -E 'js$|py$' | sort > $Oldfile
 
 			git pull
-			old_git_commit1=$(git log --format=format:"%h" --since="$action3 00:00:00" --before="$action3 23:59:59" -1)
+			old_git_commit1=$(git log branch_name --author="$branch" --format=format:"%h" --since="$action3 00:00:00" --before="$action3 23:59:59" -1)
 			git reset --hard $old_git_commit1
 			action2_num="($action2到$action3的仓库变化)"
 		elif [ "$action2_if" == "2" ];then
-			old_git_commit=$(git log --format=format:"%h" --since="$action2 00:00:00" --before="$action2 23:59:59" -1)
+			old_git_commit=$(git log branch_name --author="$branch" --format=format:"%h" --since="$action2 00:00:00" --before="$action2 23:59:59" -1)
 			git reset --hard $old_git_commit
 			ls ./ | grep -E 'js$|py$' | sort > $Oldfile
 			action2_num="($action2到今天的仓库变化)"
@@ -999,7 +999,7 @@ script() {
 	curtinlv_script
 	ccwav
 	JDWXX_Script
-	cdle_carry_Script
+	#cdle_carry_Script
 	X1a0He
 	zero205_Script
 	Ariszy_Script
