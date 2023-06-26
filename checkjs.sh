@@ -1293,6 +1293,12 @@ ACTIVITY_ID				jd_wxCollectionActivity2.js
 prodevactCode				jd_prodev.js
 
 #KingRan
+
+jd_lzkj_loreal_upperSign_url		jd_lzkj_loreal_upperSign.js
+jd_lzkj_loreal_sign_url			jd_lzkj_loreal_sign.js
+jd_lzkj_loreal_lkFollowShop_url		jd_lzkj_loreal_lkFollowShop.js
+jd_lzkj_loreal_followGoods_url		jd_lzkj_loreal_followGoods.js
+jd_lzkj_loreal_daySign_url		jd_lzkj_loreal_daySign.js
 JD_Lottery_cart				jd_lottery_cart.js
 opencard_id				jd_opencardJBK.js
 jd_sevenDay_activityUrl			jd_sevenDayjk.js
