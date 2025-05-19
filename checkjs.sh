@@ -91,7 +91,7 @@ Github_6dylan6_Script() {
 	branch="main"
 	for_diff="0"
 	git_clone_url="https://github.com/6dylan6/jdpro.git"
-	url_test="https://raw.githubusercontent.com/6dylan6/jdpro/main/README.md"
+	url_test="https://raw.githubusercontent.com/6dylan6/jdpro/refs/heads/main/README.md"
 
 	if [ -d "$Script_name" ]; then
 		tongyong_config
@@ -101,340 +101,6 @@ Github_6dylan6_Script() {
 
 }
 
-KingRan_Script() {
-	cd $dir_file
-	Script_name="KingRan_Script"
-	File_path="$dir_file/$Script_name"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="main"
-	for_diff="0"
-	git_clone_url="https://github.com/KingRan/KR.git"
-	url_test="https://raw.githubusercontent.com/KingRan/KR/main/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-
-}
-
-Ariszy_Script() {
-	cd $dir_file
-	Script_name="Ariszy_Script"
-	File_path="$dir_file/$Script_name/JD"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="master"
-	for_diff="0"
-	git_clone_url="https://github.com/Ariszy/Private-Script.git"
-	url_test="https://raw.githubusercontent.com/Ariszy/Private-Script/master/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-
-}
-
-cdle_carry_Script() {
-	cd $dir_file
-	Script_name="cdle_carry_Script"
-	File_path="$dir_file/$Script_name"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="main"
-	for_diff="0"
-	git_clone_url="https://github.com/cdle/carry.git"
-	url_test="https://raw.githubusercontent.com/cdle/carry/main/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-
-}
-
-X1a0He() {
-	cd $dir_file
-	Script_name="X1a0He"
-	File_path="$dir_file/$Script_name"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="main"
-	for_diff="0"
-	git_clone_url="https://github.com/X1a0He/jd_scripts_fixed.git"
-	url_test="https://raw.githubusercontent.com/X1a0He/jd_scripts_fixed/main/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-
-}
-
-ccwav() {
-	cd $dir_file
-	Script_name="ccwav"
-	File_path="$dir_file/$Script_name"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="main"
-	for_diff="0"
-	git_clone_url="https://github.com/ccwav/QLScript2.git"
-	url_test="https://raw.githubusercontent.com/ccwav/QLScript2/main/README.md"
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-
-}
-
-yuannian1112() {
-	cd $dir_file
-	Script_name="yuannian1112"
-	File_path="$dir_file/$Script_name"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="main"
-	for_diff="0"
-	git_clone_url="https://github.com/yuannian1112/jd_scripts.git"
-	url_test="https://raw.githubusercontent.com/yuannian1112/jd_scripts/main/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-
-}
-
-curtinlv_script() {
-	cd $dir_file
-	Script_name="curtinlv_script"
-	File_path="$dir_file/$Script_name"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="main"
-	for_diff="1"
-	git_clone_url="https://github.com/curtinlv/JD-Script.git"
-	url_test="https://raw.githubusercontent.com/curtinlv/JD-Script/main/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-}
-
-ZCY01_Script() {
-	cd $dir_file
-	Script_name="ZCY01_Script"
-	File_path="$dir_file/$Script_name/jd"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="main"
-	for_diff="0"
-	git_clone_url="https://github.com/ZCY01/daily_scripts.git"
-	url_test="https://raw.githubusercontent.com/ZCY01/daily_scripts/main/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-}
-
-JDHelloWorld() {
-	cd $dir_file
-	Script_name="JDHelloWorld"
-	File_path="$dir_file/$Script_name"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="main"
-	for_diff="1"
-	git_clone_url="https://github.com/JDHelloWorld/jd_scripts.git"
-	url_test="https://raw.githubusercontent.com/JDHelloWorld/jd_scripts/main/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-
-}
-
-nianyuguai() {
-	cd $dir_file
-	Script_name="nianyuguai"
-	File_path="$dir_file/$Script_name/qx"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="main"
-	for_diff="0"
-	git_clone_url="https://github.com/longzhuzhu/nianyu.git"
-	url_test="https://raw.githubusercontent.com/longzhuzhu/nianyu/main/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-}
-
-fangpidedongsun() {
-	cd $dir_file
-	Script_name="fangpidedongsun"
-	File_path="$dir_file/$Script_name"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="master"
-	for_diff="0"
-	git_clone_url="https://github.com/fangpidedongsun/jd_scripts2.git"
-	url_test="https://raw.githubusercontent.com/fangpidedongsun/jd_scripts2/master/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-}
-
-yangtingxiao() {
-	cd $dir_file
-	Script_name="yangtingxiao"
-	File_path="$dir_file/$Script_name"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="master"
-	for_diff="0"
-	git_clone_url="https://github.com/yangtingxiao/QuantumultX.git"
-	url_test="https://raw.githubusercontent.com/yangtingxiao/QuantumultX/master/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-}
-
-hundun() {
-	cd $dir_file
-	Script_name="hundun"
-	File_path="$dir_file/$Script_name/quanx"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="master"
-	for_diff="0"
-	git_clone_url="https://github.com/whyour/hundun.git"
-	url_test="https://raw.githubusercontent.com/whyour/hundun/master/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-}
-
-ZhiYi_Script() {
-	cd $dir_file
-	Script_name="ZhiYi_Script"
-	File_path="$dir_file/$Script_name/Scripts"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="master"
-	for_diff="0"
-	git_clone_url="https://github.com/ZhiYi-N/Private-Script.git"
-	url_test="https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-
-}
-
-smiek2221_Script() {
-	cd $dir_file
-	Script_name="smiek2221_Script"
-	File_path="$dir_file/$Script_name"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="master"
-	for_diff="0"
-	git_clone_url="https://github.com/smiek2221/scripts.git"
-	url_test="https://raw.githubusercontent.com/smiek2221/scripts/master/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-
-}
-
-zero205_Script() {
-	cd $dir_file
-	Script_name="zero205_Script"
-	File_path="$dir_file/$Script_name"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="main"
-	for_diff="0"
-	git_clone_url="https://github.com/zero205/JD_tencent_scf.git"
-	url_test="https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-
-}
-
-Aaron_Script() {
-	cd $dir_file
-	Script_name="Aaron_Script"
-	File_path="$dir_file/$Script_name"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="jd_scripts"
-	for_diff="0"
-	git_clone_url="https://github.com/Aaron-lv/sync.git"
-	url_test="https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-
-}
-
-yyds_Script() {
-	cd $dir_file
-	Script_name="yyds_Script"
-	File_path="$dir_file/$Script_name"
-	Newfile="new_${Script_name}.txt"
-	Oldfile="old_${Script_name}.txt"
-	branch="master"
-	for_diff="0"
-	git_clone_url="https://github.com/okyyds/yyds.git"
-	url_test="https://raw.githubusercontent.com/okyyds/yyds/master/README.md"
-
-	if [ -d "$Script_name" ]; then
-		tongyong_config
-	else
-		git_if
-	fi
-
-}
 
 git_if() {
 	wget --spider -nv  $url_test -o /tmp/wget_test.log
@@ -954,26 +620,26 @@ time(){
 }
 
 script() {
-	KingRan_Script
-	JDHelloWorld
 	Github_6dylan6_Script
-	smiek2221_Script
-	curtinlv_script
-	ccwav
-	JDWXX_Script
-	#cdle_carry_Script
-	X1a0He
-	zero205_Script
-	Ariszy_Script
-	yuannian1112
-	Aaron_Script
-	nianyuguai
-	fangpidedongsun
-	yangtingxiao
-	ZCY01_Script
-	#yyds_Script
-	#hundun
-	ZhiYi_Script
+	rm -rf $dir_file/$Script_name/KingRan_Script
+	rm -rf $dir_file/$Script_name/JDHelloWorld
+	rm -rf $dir_file/$Script_name/smiek2221_Script
+	rm -rf $dir_file/$Script_name/curtinlv_script
+	rm -rf $dir_file/$Script_name/ccwav
+	rm -rf $dir_file/$Script_name/JDWXX_Script
+	rm -rf $dir_file/$Script_name/cdle_carry_Script
+	rm -rf $dir_file/$Script_name/X1a0He
+	rm -rf $dir_file/$Script_name/zero205_Script
+	rm -rf $dir_file/$Script_name/Ariszy_Script
+	rm -rf $dir_file/$Script_name/yuannian1112
+	rm -rf $dir_file/$Script_name/Aaron_Script
+	rm -rf $dir_file/$Script_name/nianyuguai
+	rm -rf $dir_file/$Script_name/fangpidedongsun
+	rm -rf $dir_file/$Script_name/yangtingxiao
+	rm -rf $dir_file/$Script_name/ZCY01_Script
+	rm -rf $dir_file/$Script_name/yyds_Script
+	rm -rf $dir_file/$Script_name/hundun
+	rm -rf $dir_file/$Script_name/ZhiYi_Script
 }
 
 menu() {
