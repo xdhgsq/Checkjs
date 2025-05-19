@@ -88,7 +88,7 @@ faker2() {
 	File_path="$dir_file/$Script_name"
 	Newfile="new_${Script_name}.txt"
 	Oldfile="old_${Script_name}.txt"
-	branch="master"
+	branch="main"
 	for_diff="0"
 	git_clone_url="https://github.com/shufflewzc/faker2.git"
 	url_test="https://raw.githubusercontent.com/shufflewzc/faker2/refs/heads/main/README.md"
