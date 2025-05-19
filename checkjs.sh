@@ -101,6 +101,43 @@ faker2() {
 
 }
 
+faker3() {
+	cd $dir_file
+	Script_name="faker3_Script"
+	File_path="$dir_file/$Script_name"
+	Newfile="new_${Script_name}.txt"
+	Oldfile="old_${Script_name}.txt"
+	branch="main"
+	for_diff="0"
+	git_clone_url="https://github.com/shufflewzc/faker3.git"
+	url_test="https://raw.githubusercontent.com/shufflewzc/faker3/refs/heads/main/README.md"
+
+	if [ -d "$Script_name" ]; then
+		tongyong_config
+	else
+		git_if
+	fi
+
+}
+
+faker4() {
+	cd $dir_file
+	Script_name="faker3_Script"
+	File_path="$dir_file/$Script_name"
+	Newfile="new_${Script_name}.txt"
+	Oldfile="old_${Script_name}.txt"
+	branch="main"
+	for_diff="0"
+	git_clone_url="https://github.com/shufflewzc/faker4.git"
+	url_test="https://raw.githubusercontent.com/shufflewzc/faker4/refs/heads/main/README.md"
+
+	if [ -d "$Script_name" ]; then
+		tongyong_config
+	else
+		git_if
+	fi
+
+}
 
 Github_6dylan6_Script() {
 	cd $dir_file
@@ -642,6 +679,8 @@ time(){
 script() {
 	Github_6dylan6_Script
 	faker2
+	faker3
+	faker4
 	rm -rf $dir_file/$Script_name/KingRan_Script
 	rm -rf $dir_file/$Script_name/JDHelloWorld
 	rm -rf $dir_file/$Script_name/smiek2221_Script
