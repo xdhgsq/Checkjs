@@ -82,6 +82,26 @@ JDWXX_Script() {
 
 }
 
+faker2() {
+	cd $dir_file
+	Script_name="faker2_Script"
+	File_path="$dir_file/$Script_name"
+	Newfile="new_${Script_name}.txt"
+	Oldfile="old_${Script_name}.txt"
+	branch="master"
+	for_diff="0"
+	git_clone_url="https://github.com/shufflewzc/faker2.git"
+	url_test="https://raw.githubusercontent.com/shufflewzc/faker2/refs/heads/main/README.md"
+
+	if [ -d "$Script_name" ]; then
+		tongyong_config
+	else
+		git_if
+	fi
+
+}
+
+
 Github_6dylan6_Script() {
 	cd $dir_file
 	Script_name="Github_6dylan6_Script"
@@ -621,6 +641,7 @@ time(){
 
 script() {
 	Github_6dylan6_Script
+	faker2
 	rm -rf $dir_file/$Script_name/KingRan_Script
 	rm -rf $dir_file/$Script_name/JDHelloWorld
 	rm -rf $dir_file/$Script_name/smiek2221_Script
