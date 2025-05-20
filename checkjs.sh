@@ -9,7 +9,7 @@ Source="$0"
 while [ -h "$Source"  ]; do
     dir_file="$( cd -P "$( dirname "$Source"  )" && pwd  )"
     Source="$(readlink "$Source")"
-    [[ $Source != /*  ]] && Source="$dir_file/$Source"
+    [ $Source != /*  ] && Source="$dir_file/$Source"
 done
 dir_file="$( cd -P "$( dirname "$Source"  )" && pwd  )"
 
@@ -174,7 +174,7 @@ git_if() {
 		git clone -b $branch $git_clone_url $Script_name
 		tongyong_config
 	else
-		echo -e "${yellow}$Script_name库删除或者测试文件被移位，暂时不做下载操作${white}"
+		echo  "${yellow}$Script_name库删除或者测试文件被移位，暂时不做下载操作${white}"
 	fi
 }
 
@@ -218,19 +218,19 @@ tongyong_config() {
 	else
 		num="1"
 		eeror_num="1"
-		while [[ ${num} -gt 0 ]]; do
-			echo -e "$green>> $Script_name$yellow下载失败,开始尝试第$eeror_num次下载，3次下载失败就不再重试。$white"
+		while [ ${num} -gt 0 ]; do
+			echo  "$green>> $Script_name$yellow下载失败,开始尝试第$eeror_num次下载，3次下载失败就不再重试。$white"
 			wget $url_test -O /tmp/wget_test.log
 			if [ $? -eq 0 ]; then
 				num=$(expr $num - 1)
 			else
 				if [ $eeror_num -ge 3 ];then
-					echo -e "$green>> $Script_name$red下载$eeror_num次都失败，跳过这个下载$white"
+					echo  "$green>> $Script_name$red下载$eeror_num次都失败，跳过这个下载$white"
 					echo ""
 					num=$(expr $num - 1)
 					echo "#### 《$Script_name+$current_time》" >>$dir_file/git_log/${current_time}.log
 					wget_error="$green[$Script_name]$red无法下载仓库文件，暂时不更新,可能是网络问题或者上游仓库被封，建议查看上游仓库是否正常，测试仓库是否正常：$url_test$white"
-					echo -e "$wget_error"
+					echo  "$wget_error"
 					echo "$wget_error" | sed -e "s/\\\//g" -e "s/\[//g" -e "s/033//g" -e "s/0m//g" -e "s/31m//g" -e "s/32m//g" -e "s/可能/$wrap$wrap_tab可能/g" -e "s/建议/$wrap$wrap_tab建议/g"  >>$dir_file/git_log/${current_time}.log
 					echo ""
 					echo "**********************************************"
@@ -387,10 +387,10 @@ sendMessage() {
 	
 	#如果没有新增或者删除就不推送
 	if [ $content = "no_update" ]; then
-		echo -e "$green[$Script_name] $white$yellow没有新增也没有删除脚本，一切风平浪静$white"
+		echo  "$green[$Script_name] $white$yellow没有新增也没有删除脚本，一切风平浪静$white"
 		echo "**********************************************"
 	else
-		echo -e "$green[$Script_name] 新增$cat_add脚本,删除$cat_delete脚本，已推送到你的接收设备$white"
+		echo  "$green[$Script_name] 新增$cat_add脚本,删除$cat_delete脚本，已推送到你的接收设备$white"
 		echo "**********************************************"
 		if [ "$tg_script_run" == "1" ];then
 			echo ""
@@ -436,7 +436,7 @@ That_day_sendMessage() {
 
 that_day_push() {
 	menu
-	echo -e "$green无视时间规则开始推送$white"
+	echo  "$green无视时间规则开始推送$white"
 	That_day_sendMessage
 }
 
@@ -462,7 +462,7 @@ case "$push_if" in
 			weixin_push
 		;;
 		*)
-			echo -e "$red填写错误，不进行推送$white"
+			echo  "$red填写错误，不进行推送$white"
 		;;
 	esac
 
@@ -473,13 +473,13 @@ server_push() {
 if [ ! $SCKEY ];then
 	echo "没找到Server酱key不做操作"
 else
-	echo -e "$green server酱开始推送$title$white"
+	echo  "$green server酱开始推送$title$white"
 	curl -s "http://sc.ftqq.com/$SCKEY.send?text=$title++`date +%Y-%m-%d`++`date +%H:%M`" -d "&desp=$server_content" >/dev/null 2>&1
 
-	if [[ $? -eq 0 ]]; then
-		echo -e "$green server酱推送完成$white"
+	if [ $? -eq 0 ]; then
+		echo  "$green server酱推送完成$white"
 	else
-		echo -e "$red server酱推送失败。请检查报错代码$title$white"
+		echo  "$red server酱推送失败。请检查报错代码$title$white"
 	fi
 fi
 
@@ -533,13 +533,13 @@ if [ ! $media_id ];then
 else
 	msg_body="{\"touser\":\"$touser\",\"agentid\":$agentid,\"msgtype\":\"mpnews\",\"mpnews\":{\"articles\":[{\"title\":\"$title\",\"thumb_media_id\":\"$media_id\",\"content\":\"$weixin_content\",\"digest\":\"$weixin_desp\"}]}}"
 fi
-	echo -e "$green 企业微信开始推送$title$white"
+	echo  "$green 企业微信开始推送$title$white"
 	curl -s "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=$access_token" -d "$msg_body"
 
-	if [[ $? -eq 0 ]]; then
-		echo -e "$green 企业微信推送成功$title$white"
+	if [ $? -eq 0 ]; then
+		echo  "$green 企业微信推送成功$title$white"
 	else
-		echo -e "$red 企业微信推送失败。请检查报错代码$title$white"
+		echo  "$red 企业微信推送失败。请检查报错代码$title$white"
 	fi
 
 }
@@ -554,7 +554,7 @@ rm_log(){
 }
 
 update_script() {
-	echo -e "$green 开始更新checkjs，当前时间：$white`date "+%Y-%m-%d %H:%M"`"
+	echo  "$green 开始更新checkjs，当前时间：$white`date "+%Y-%m-%d %H:%M"`"
 	cd $dir_file
 	branch="main"
 	git_pull
@@ -563,10 +563,10 @@ update_script() {
 
 description_if() {
 	wget https://raw.githubusercontent.com/ITdesk01/Checkjs/main/README.md -O /tmp/test_README.md
-	if [[ $? -eq 0 ]]; then
-		echo -e "$green网络正常，可以ping通github$white"
+	if [ $? -eq 0 ]; then
+		echo  "$green网络正常，可以ping通github$white"
 	else
-		echo -e "$red请检查你的网络，ping github失败，建议科学上网$white"
+		echo  "$red请检查你的网络，ping github失败，建议科学上网$white"
 		exit 0
 	fi
 
@@ -586,16 +586,16 @@ description_if() {
 	echo "稍等一下，正在取回远端脚本源码，用于比较现在脚本源码，速度看你网络"
 	cd $dir_file
 	git fetch
-	if [[ $? -eq 0 ]]; then
+	if [ $? -eq 0 ]; then
 		echo ""
 	else
-		echo -e "$red>> 取回分支没有成功，重新执行代码$white"
+		echo  "$red>> 取回分支没有成功，重新执行代码$white"
 		description_if
 	fi
 	clear
 	git_branch=$(git branch -v | grep -o behind )
-	if [[ "$git_branch" == "behind" ]]; then
-		echo -e "$green 检测到有更新，开始自动更新。。"
+	if [ "$git_branch" == "behind" ]; then
+		echo  "$green 检测到有更新，开始自动更新。。"
 		update_script
 		sleep 2
 		sh $0
@@ -677,7 +677,7 @@ time(){
 	#２．获取某一天前的仓库与现在对比（需要具体日期，openwrt 不支持此写法date +%Y-%m-%d -d '-52 day'）
 	if [ -z "$action2" ];then
 		clear
-		echo -e "${red}time命令没有发现日期，例子输入${green}sh \$checkjs time 2023-02-14${red}获取2023-02-14当天的仓库变化${white}"
+		echo  "${red}time命令没有发现日期，例子输入${green}sh \$checkjs time 2023-02-14${red}获取2023-02-14当天的仓库变化${white}"
 		exit 0
 	else
 		script
@@ -715,12 +715,12 @@ menu() {
 	checkjs_config_if
 	opencard_variable
 	echo "----------------------------------------------"
-	echo -e "$green Checkjs $version开始检查脚本新增或删除情况$white"
+	echo  "$green Checkjs $version开始检查脚本新增或删除情况$white"
 	echo ""
-	echo -e "$yellow无视时间规则直接推送:$green sh \$checkjs that_day_push$white"
+	echo  "$yellow无视时间规则直接推送:$green sh \$checkjs that_day_push$white"
 	echo "----------------------------------------------"
-	echo -e "$green 当前时间：$white`date "+%Y-%m-%d %H:%M"`"
-	echo -e "$yellow 检测脚本是否最新:$white $Script_status "
+	echo  "$green 当前时间：$white`date "+%Y-%m-%d %H:%M"`"
+	echo  "$yellow 检测脚本是否最新:$white $Script_status "
 	echo "**********************************************"
 	echo > $dir_file/git_log/${current_time}.log
 	script
@@ -768,7 +768,7 @@ run_script_if() {
 		#判断当前时间
 		current_time=$(date +%H)
 		if [ "$script_date" == "" ];then
-			echo -e "${yellow}script_date为空${white}"
+			echo  "${yellow}script_date为空${white}"
 		elif [ "$script_date" == "*" ];then
 			if [ "$action1" == "time" ];then
 				echo "不做任何操作"
@@ -780,25 +780,25 @@ run_script_if() {
 			script_date_max=$(echo "$script_date" | awk -F "-" '{print $2}')
 			seq_date=$(seq $script_date_min $script_date_max)
 			echo "$seq_date" | grep -o "$current_time"
-			if [[ $? -eq 0 ]]; then
-				echo -e "${green}》》当前时间：$current_time点，符合你的设置${white}"
+			if [ $? -eq 0 ]; then
+				echo  "${green}》》当前时间：$current_time点，符合你的设置${white}"
 				run_script
 			else
-				echo -e "${yellow}》》当前时间：$current_time点，不符合你的设置，不自动运行脚本${white}"
+				echo  "${yellow}》》当前时间：$current_time点，不符合你的设置，不自动运行脚本${white}"
 				auto_run="(有合适脚本,但时间不符合不跑)"
 			fi
 		elif [ `echo "$script_date" | grep -o "," | sort -u` == "," ];then
 			script_date_convert=$(echo "$script_date" | sed "s/,/ /g")
 			echo "$script_date_convert" | grep -o "$current_time"
-			if [[ $? -eq 0 ]]; then
-				echo -e "${green}》》当前时间：$current_time点，可以自动跑${white}"
+			if [ $? -eq 0 ]; then
+				echo  "${green}》》当前时间：$current_time点，可以自动跑${white}"
 				run_script
 			else
-				echo -e "${yellow}》》当前时间：$current_time点，不符合你的设置，不自动运行脚本${white}"
+				echo  "${yellow}》》当前时间：$current_time点，不符合你的设置，不自动运行脚本${white}"
 				auto_run="(有合适脚本,但时间不符合不跑)"
 			fi
 		else
-			echo -e "script_date的字符：$script_date,进入下级判断"
+			echo  "script_date的字符：$script_date,进入下级判断"
 			if [ "$action1" == "time" ];then
 				echo "不做任何操作"
 			else
@@ -1111,10 +1111,10 @@ export jd_drawCenter_addCart="true" #// 是否做加购任务，默认不做
 		if [ -f $dir_file/tg/tg.py ] && [ ! "$docker_id" == "" ];then
 			cp $dir_file/tg.py $dir_file/tg/tg.py
 			docker exec $docker_id /bin/bash -c "export API_ID=$tg_api_id && export API_HASH=$tg_api_hash && python3.7 tg.py"
-			if [[ $? -eq 0 ]]; then
-				echo -e "${green}tg.py运行成功$white"
+			if [ $? -eq 0 ]; then
+				echo  "${green}tg.py运行成功$white"
 			else
-				echo -e "${red}tg.py运行失败$white"
+				echo  "${red}tg.py运行失败$white"
 				exit 0
 			fi
 			#开始检测变量
@@ -1124,13 +1124,13 @@ export jd_drawCenter_addCart="true" #// 是否做加购任务，默认不做
 				tg_add="$dir_file/tg/tg_add.txt"
 				script_dir=$(cat $dir_file/config.txt | grep -v "#" | grep "script_dir"  | awk -F "=" '{print $2}' | sed "s/\"//g")
 
-				cat $dir_file/tg/tg.log | sed "s/,/\n/g"| sed "s/\\\n/\n/g" | grep "export"| sed 's/[[:space:]]//g' |awk -F "export" '{print $2}' | sed "s/\"//g" | sed "s/'//g" |grep -v "=活动" | sort -u >/tmp/tg_purify.log
+				cat $dir_file/tg/tg.log | sed "s/,/\n/g"| sed "s/\\\n/\n/g" | grep "export"| sed 's/[:space:]//g' |awk -F "export" '{print $2}' | sed "s/\"//g" | sed "s/'//g" |grep -v "=活动" | sort -u >/tmp/tg_purify.log
 				grep_keywords=$(cat $dir_file/tg/variable_name.txt|sed "s/#/\n#/g"| grep -v "#"|awk '{print $1}' |sed '/^$/d'| sed "s/$/|/g"| sed ':t;N;s/\n//;b t'| sed "s/|$//")
 
 				extract_log=$(grep -E "$grep_keywords" /tmp/tg_purify.log)
 
-				echo -e "\n$yellow本次变量有以下$white"
-				echo -e "$extract_log\n"
+				echo  "\n$yellow本次变量有以下$white"
+				echo  "$extract_log\n"
 				#首次运行需要创建oldfile
 				if [ -f "$tg_oldfile" ];then
 					echo ""
@@ -1144,13 +1144,13 @@ export jd_drawCenter_addCart="true" #// 是否做加购任务，默认不做
 				echo "$extract_log" > $tg_newfile
 
 				grep -vwf $tg_oldfile $tg_newfile > $tg_add
-				if [[ $? -eq 0 ]]; then
-					echo -e "${green}grep　tg_add运行成功$white"
+				if [ $? -eq 0 ]; then
+					echo  "${green}grep　tg_add运行成功$white"
 					echo "此时tg_oldfile变量数：`cat $tg_oldfile| wc -l`"
 					echo "此时tg_newfile变量数：`cat $tg_newfile| wc -l`"
 					echo "此时tg_add变量数：`cat $tg_add| wc -l`"
 				else
-					echo -e "${red}grep　tg_add运行失败$green(tg_oldfile与tg_newfile相等时忽略。不等于时手动运行测试)$white"
+					echo  "${red}grep　tg_add运行失败$green(tg_oldfile与tg_newfile相等时忽略。不等于时手动运行测试)$white"
 					echo "此时tg_oldfile变量数：`cat $tg_oldfile| wc -l`"
 					echo "此时tg_newfile变量数：`cat $tg_newfile| wc -l`"
 					echo "此时tg_add变量数：`cat $tg_add| wc -l`"
@@ -1159,7 +1159,7 @@ export jd_drawCenter_addCart="true" #// 是否做加购任务，默认不做
 				if [ $(cat $tg_add | wc -l) = "0" ];then
 					Add_if="0"
 					echo "当前时间`date`"
-					echo -e "$green暂时未发现新变量，暂时不做推送$white"
+					echo  "$green暂时未发现新变量，暂时不做推送$white"
 				else
 					for i in `cat $tg_add|sed "s/#/\n#/g"| grep -v "#"`
 					do
@@ -1192,7 +1192,7 @@ export jd_drawCenter_addCart="true" #// 是否做加购任务，默认不做
 									#export yhyactivityId="dVF7gQUVKyUcuSsVhuya5d2XD4F"
 									#export yhypin="" #被助力的号，自己填
 
-									cat ${script_dir}/jdCookie.js |grep "pin=" | grep -v "正确格式为" | awk -F "," '{print $1}' | sed "s/'//g" | sed 's/[[:space:]]//g' >${script_dir}/cklist1.txt
+									cat ${script_dir}/jdCookie.js |grep "pin=" | grep -v "正确格式为" | awk -F "," '{print $1}' | sed "s/'//g" | sed 's/[:space:]//g' >${script_dir}/cklist1.txt
 									cp $dir_file/KingRan_Script/$js_name1 ${script_dir}/$js_name1
 									echo "${script_dir}/$js_name1运行，当前时间`date`" >>/tmp/tg_run_script.log
 									echo "开始运行${script_dir}/$js_name1"
@@ -1306,7 +1306,7 @@ export jd_drawCenter_addCart="true" #// 是否做加购任务，默认不做
 
 			if [ ! "$tg_api_id" == "" ] && [ ! "$tg_api_hash" == "" ];then
 				# python3.7 -m pip install telethon
-				echo -e "$green开始安装tg环境，请稍等，请保证你的docker 也能访问google，不然会失败$white"
+				echo  "$green开始安装tg环境，请稍等，请保证你的docker 也能访问google，不然会失败$white"
 				docker run -d --name tg -i -t -v $dir_file/tg:/usr/share/tg --restart=always itdeskzhang/tg:0.1
 
 				sleep 3
@@ -1317,14 +1317,14 @@ export jd_drawCenter_addCart="true" #// 是否做加购任务，默认不做
 					echo "没有找到docker_id，容器没有运行成功"
 				else
 					clear
-					echo -e "$green>>请按下面提示输入tg手机号码:(+86XXX)$white"
+					echo  "$green>>请按下面提示输入tg手机号码:(+86XXX)$white"
 					docker exec -it $docker_id /bin/bash -c "export API_ID=$tg_api_id && export API_HASH=$tg_api_hash && python3.7 tg.py"
-					if [[ $? -eq 0 ]]; then
-						echo -e "$green>>安装成功,后面脚本会自己运行的$white"
+					if [ $? -eq 0 ]; then
+						echo  "$green>>安装成功,后面脚本会自己运行的$white"
 						echo >/$dir_file/tg/tg.log
 						tg
 					else
-						echo -e "$red>>运行失败：$white请手动输入docker exec -it $docker_id /bin/bash -c "export API_ID=$tg_api_id "&& "export API_HASH=$tg_api_hash "&& python3 tg.py"""
+						echo  "$red>>运行失败：$white请手动输入docker exec -it $docker_id /bin/bash -c "export API_ID=$tg_api_id "&& "export API_HASH=$tg_api_hash "&& python3 tg.py"""
 					fi
 				fi
 			else
@@ -1345,7 +1345,7 @@ echo "-----------------------------变量获取---------------------------------
 #开卡部分
 	if [ -z "$script_if" ];then
 		script_if=$(cat $dir_file/config.txt | grep -v "#" | grep "script_if="  | awk -F "=" '{print $2}' | sed "s/\"//g")
-		echo -e "${yellow}script_if系统变量找不到，查找config文件$white"
+		echo  "${yellow}script_if系统变量找不到，查找config文件$white"
 		echo "script_if:$script_if"
 	else
 		echo "script_if:$script_if"
@@ -1353,7 +1353,7 @@ echo "-----------------------------变量获取---------------------------------
 
 	if [ -z "$script_ifname" ];then
 		script_ifname1=$(cat $dir_file/config.txt | grep -v "#" | grep "script_ifname" | awk -F "=" '{print $2}' | sed "s/\"//g")
-		echo -e "${yellow}script_ifname系统变量找不到，查找config文件$white"
+		echo  "${yellow}script_ifname系统变量找不到，查找config文件$white"
 		echo "script_ifname:$script_ifname1"
 	else
 		script_ifname1=$(echo $script_ifname |sed "s/,/|/g")
@@ -1362,7 +1362,7 @@ echo "-----------------------------变量获取---------------------------------
 
 	if [ -z "$script_dir" ];then
 		script_dir=$(cat $dir_file/config.txt | grep -v "#" | grep "script_dir"  | awk -F "=" '{print $2}' | sed "s/\"//g")
-		echo -e "${yellow}script_dir系统变量找不到，查找config文件$white"
+		echo  "${yellow}script_dir系统变量找不到，查找config文件$white"
 		echo "script_dir:$script_dir"
 	else
 		echo "script_dir:$script_dir"
@@ -1370,7 +1370,7 @@ echo "-----------------------------变量获取---------------------------------
 
 	if [ -z "$script_date" ];then
 		script_date=$(cat $dir_file/config.txt | grep -v "#" | grep "script_date" | awk -F "=" '{print $2}' | sed "s/\"//g")
-		echo -e "${yellow}script_date系统变量找不到，查找config文件$white"
+		echo  "${yellow}script_date系统变量找不到，查找config文件$white"
 		echo "script_date:$script_date"
 	else
 		echo "script_date:$script_date"
@@ -1379,7 +1379,7 @@ echo "-----------------------------变量获取---------------------------------
 #tg部分
 	if [ -z "$tg_if" ];then
 		tg_if=$(cat $dir_file/config.txt | grep -v "#" | grep "tg_if" | awk -F "=" '{print $2}' | sed "s/\"//g")
-		echo -e "${yellow}tg_if系统变量找不到，查找config文件$white"
+		echo  "${yellow}tg_if系统变量找不到，查找config文件$white"
 		echo "tg_if:$tg_if"
 	else
 		echo "tg_if:$tg_if"
@@ -1387,7 +1387,7 @@ echo "-----------------------------变量获取---------------------------------
 
 	if [ -z "$tg_api_id" ];then
 		tg_api_id=$(cat $dir_file/config.txt | grep -v "#" | grep "tg_api_id" | awk -F "=" '{print $2}' | sed "s/\"//g")
-		echo -e "${yellow}tg_api_id系统变量找不到，查找config文件$white"
+		echo  "${yellow}tg_api_id系统变量找不到，查找config文件$white"
 		echo "tg_api_id:$tg_api_id"
 	else
 		echo "tg_api_id:$tg_api_id"
@@ -1395,7 +1395,7 @@ echo "-----------------------------变量获取---------------------------------
 
 	if [ -z "$tg_api_hash" ];then
 		tg_api_hash=$(cat $dir_file/config.txt | grep -v "#" | grep "tg_api_hash" | awk -F "=" '{print $2}' | sed "s/\"//g")
-		echo -e "${yellow}tg_api_hash系统变量找不到，查找config文件$white"
+		echo  "${yellow}tg_api_hash系统变量找不到，查找config文件$white"
 		echo "tg_api_hash:$tg_api_hash"
 	else
 		echo "tg_api_hash:$tg_api_hash"
