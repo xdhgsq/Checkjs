@@ -4,7 +4,6 @@
 #set -u
 
 version="1.1"
-cron_file="/etc/crontabs/root"
 #获取当前脚本目录copy脚本之家
 Source="$0"
 while [ -h "$Source"  ]; do
@@ -19,6 +18,15 @@ python3="/usr/bin/python3"
 
 ListJs_add="ListJs_add.txt"
 ListJs_drop="ListJs_drop.txt"
+
+uname_if=$(cat /etc/profile | grep -o Ubuntu)
+
+if [ "$uname_if" = "Ubuntu" ];then
+	echo "当前环境为ubuntu"
+	cron_file="/etc/crontab"
+else
+	cron_file="/etc/crontabs/root"
+fi
 
 #检测当前位置
 if [ "$dir_file" == "/usr/share/jd_openwrt_script/Checkjs" ];then
@@ -619,7 +627,7 @@ task() {
 
 }
 task_add() {
-cat >>/etc/crontabs/root <<EOF
+cat >>$cron_file <<EOF
 #**********这里是Checkjs的定时任务$cron_version版本**********#102#
 */5 * * * * source /etc/profile && $dir_file/checkjs.sh >/tmp/checkjs.log 2>&1 #102#
 45 21 * * * $dir_file/checkjs.sh update_script  >/tmp/checkjs_update_script.log 2>&1 #102#
@@ -630,7 +638,7 @@ EOF
 }
 task_delete() {
 	echo "开始删除定时任务"
-	sed -i '/#102#/d' /etc/crontabs/root >/dev/null 2>&1
+	sed -i '/#102#/d' $cron_file >/dev/null 2>&1
 	sleep 5
 	echo "删除完成，如果需要重新跑，执行sh \$checkjs"
 }
@@ -1283,10 +1291,10 @@ export jd_drawCenter_addCart="true" #// 是否做加购任务，默认不做
 					done
 					echo "$extract_log" > $tg_oldfile
 				fi
-					cron_tg=$(cat /etc/crontabs/root | grep "#tg0.2#" | wc -l)
+					cron_tg=$(cat $cron_file | grep "#tg0.2#" | wc -l)
 					if [ "$cron_tg" == "0"  ];then
-						sed -i '/checkjs.sh tg/d' /etc/crontabs/root >/dev/null 2>&1
-						echo "*/1 * * * * source /etc/profile && $dir_file/checkjs.sh tg >/tmp/checkjs_tg.log 2>&1 #tg0.2#" >>/etc/crontabs/root
+						sed -i '/checkjs.sh tg/d' $cron_file >/dev/null 2>&1
+						echo "*/1 * * * * source /etc/profile && $dir_file/checkjs.sh tg >/tmp/checkjs_tg.log 2>&1 #tg0.2#" >>$cron_file
 					else
 						echo ""
 					fi
