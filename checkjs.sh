@@ -29,7 +29,7 @@ else
 fi
 
 #检测当前位置
-if [ "$dir_file" == "/usr/share/jd_openwrt_script/Checkjs" ];then
+if [ "$dir_file" = "/usr/share/jd_openwrt_script/Checkjs" ];then
 	openwrt_script="/usr/share/jd_openwrt_script"
 	openwrt_script_config="/usr/share/jd_openwrt_script/script_config"
 else
@@ -43,7 +43,7 @@ else
 	echo >$dir_file/Checkjs_Sckey.txt
 fi
 
-if [ "$dir_file" == "/usr/share/jd_openwrt_script/Checkjs" ];then
+if [ "$dir_file" = "/usr/share/jd_openwrt_script/Checkjs" ];then
 	SCKEY=$(grep "let SCKEY" $openwrt_script_config/sendNotify.js  | awk -F "'" '{print $2}')
 	if [ ! $SCKEY ];then
 		SCKEY=$(cat $openwrt_script_config/Checkjs_Sckey.txt)
@@ -170,7 +170,7 @@ Github_6dylan6_Script() {
 git_if() {
 	wget --spider -nv  $url_test -o /tmp/wget_test.log
 	wget_test=$( cat /tmp/wget_test.log | grep -o "200 OK")
-	if [ "$wget_test" == "200 OK" ];then
+	if [ "$wget_test" = "200 OK" ];then
 		git clone -b $branch $git_clone_url $Script_name
 		tongyong_config
 	else
@@ -182,10 +182,10 @@ tongyong_config() {
 	echo ""
 	wget --spider -nv  $url_test -o /tmp/wget_test.log
 	wget_test=$( cat /tmp/wget_test.log | grep -o "200 OK")
-	if [ "$wget_test" == "200 OK" ];then
+	if [ "$wget_test" = "200 OK" ];then
 		cd $File_path
 		git pull
-		if [ "$action2_if" == "2" ] && [ "$action3_if" == "2" ];then
+		if [ "$action2_if" = "2" ] && [ "$action3_if" = "2" ];then
 			old_git_commit=$(git log --format=format:"%h" --since="$action2 00:00:00" --before="$action2 23:59:59" -1)
 			if [ -z "$old_git_commit" ];then
 				echo "$Script_name $action2仓库没有记录，不进行对比"
@@ -198,7 +198,7 @@ tongyong_config() {
 				git reset --hard $old_git_commit1
 				action2_num="($action2到$action3的仓库变化)"
 			fi
-		elif [ "$action2_if" == "2" ];then
+		elif [ "$action2_if" = "2" ];then
 			old_git_commit=$(git log branch_name --author="$branch" --format=format:"%h" --since="$action2 00:00:00" --before="$action2 23:59:59" -1)
 			git reset --hard $old_git_commit
 			ls ./ | grep -E 'js$|py$' | sort > $Oldfile
@@ -208,7 +208,7 @@ tongyong_config() {
 			init_data
 		fi
 
-		if [ $for_diff == "1" ];then
+		if [ $for_diff = "1" ];then
 			for_diff_cron
 		else
 			diff_cron
@@ -349,7 +349,7 @@ sendMessage() {
 	rm -rf /tmp/down_url.txt
 	if [ $Add_if = "1" ] && [ $Delete_if = "1" ]; then
 		num="新增$cat_add脚本删除$cat_delete脚本"
-		if [ "$cat_add" == "1" ];then
+		if [ "$cat_add" = "1" ];then
 			content=$(echo "#### 新增脚本有:$wrap$wrap_tab$Add#### 下载链接:${url}$Add#### 删除脚本有:$wrap$wrap_tab$Delete" | sed "s/$wrap_tab####/####/g")
 		else
 			for i in `echo "$Add"| sed "s/$wrap$wrap_tab/ /g"`
@@ -361,12 +361,12 @@ sendMessage() {
 			content=$(echo "#### 新增脚本有:$wrap$wrap_tab$Add#### 下载链接:$new_add#### 删除脚本有:$wrap$wrap_tab$Delete" | sed "s/$wrap_tab####/####/g")
 		fi
 	elif [ $Add_if = "1" ]; then 
-		if [ "$tg_script_run" == "1" ];then
+		if [ "$tg_script_run" = "1" ];then
 			num="tg频道新增１变量"
 			content="#### 新增变量有:$wrap$wrap_tab$Add"
 		else
 			num="新增$cat_add脚本"
-			if [ "$cat_add" == "1" ];then
+			if [ "$cat_add" = "1" ];then
 				content="#### 新增脚本有:$wrap$wrap_tab$Add#### 下载链接:${url}$Add "
 			else
 				for i in `echo "$Add"| sed "s/$wrap$wrap_tab/ /g"`
@@ -392,7 +392,7 @@ sendMessage() {
 	else
 		echo  "$green[$Script_name] 新增$cat_add脚本,删除$cat_delete脚本，已推送到你的接收设备$white"
 		echo "**********************************************"
-		if [ "$tg_script_run" == "1" ];then
+		if [ "$tg_script_run" = "1" ];then
 			echo ""
 		else
 			run_script_if
@@ -488,7 +488,7 @@ fi
 weixin_push() {
 current_time=$(date +%s)
 expireTime="7200"
-if [ $push_if == "3" ];then
+if [ $push_if = "3" ];then
 	weixinkey=$(grep "weixin2" $openwrt_script_config/jd_openwrt_script_config.txt | awk -F "'" '{print $2}')
 else
 	weixinkey=$(grep "let QYWX_AM" $openwrt_script_config/sendNotify.js | awk -F "'" '{print $2}')
@@ -574,7 +574,7 @@ description_if() {
 		mkdir 	$dir_file/git_log
 	fi
 
-	if [ "$dir_file" == "/usr/share/jd_openwrt_script/Checkjs" ];then
+	if [ "$dir_file" = "/usr/share/jd_openwrt_script/Checkjs" ];then
 		SCKEY=$(grep "let SCKEY" /usr/share/jd_openwrt_script/script_config/sendNotify.js  | awk -F "'" '{print $2}')
 		if [ ! $SCKEY ];then
 			SCKEY=$(cat /usr/share/jd_openwrt_script/script_config/Checkjs_Sckey.txt)
@@ -594,7 +594,7 @@ description_if() {
 	fi
 	clear
 	git_branch=$(git branch -v | grep -o behind )
-	if [ "$git_branch" == "behind" ]; then
+	if [ "$git_branch" = "behind" ]; then
 		echo  "$green 检测到有更新，开始自动更新。。"
 		update_script
 		sleep 2
@@ -616,12 +616,12 @@ description_if() {
 
 task() {
 	cron_version="3.2"
-	if [ `grep -o "Checkjs的定时任务$cron_version" $cron_file |wc -l` == "0" ]; then
+	if [ `grep -o "Checkjs的定时任务$cron_version" $cron_file |wc -l` = "0" ]; then
 		echo "不存在计划任务开始设置"
 		task_delete
 		task_add
 		echo "计划任务设置完成"
-	elif [ `grep -o "checkjs的定时任务$cron_version" $cron_file |wc -l` == "1" ]; then
+	elif [ `grep -o "checkjs的定时任务$cron_version" $cron_file |wc -l` = "1" ]; then
 			echo "计划任务与设定一致，不做改变"
 	fi
 
@@ -663,7 +663,7 @@ ds_setup() {
 system_variable() {
 	#添加系统变量
 	checkjs_path=$(cat /etc/profile | grep -o checkjs.sh | wc -l)
-	if [ "$checkjs_path" == "0" ]; then
+	if [ "$checkjs_path" = "0" ]; then
 		echo "export checkjs_file=$dir_file" |  tee -a /etc/profile
 		echo "export checkjs=$dir_file/checkjs.sh" |  tee -a /etc/profile
 		. /etc/profile
@@ -725,10 +725,10 @@ menu() {
 	echo > $dir_file/git_log/${current_time}.log
 	script
 
-	if [ $(date +%H%M) == "1200" ];then
+	if [ $(date +%H%M) = "1200" ];then
 		echo "12点开始推送今天的github更新记录"
 		That_day_sendMessage
-	elif [ $(date +%H%M) == "2200" ];then
+	elif [ $(date +%H%M) = "2200" ];then
 		echo "22点开始推送今天的github更新记录"
 		That_day_sendMessage
 	fi
@@ -762,20 +762,20 @@ help() {
 
 #判断是否自动运行新增脚本
 run_script_if() {
-	if [ "$script_if" == "no" ];then
+	if [ "$script_if" = "no" ];then
 		echo ""
 	else
 		#判断当前时间
 		current_time=$(date +%H)
-		if [ "$script_date" == "" ];then
+		if [ "$script_date" = "" ];then
 			echo  "${yellow}script_date为空${white}"
-		elif [ "$script_date" == "*" ];then
-			if [ "$action1" == "time" ];then
+		elif [ "$script_date" = "*" ];then
+			if [ "$action1" = "time" ];then
 				echo "不做任何操作"
 			else
 				run_script
 			fi
-		elif [ `echo "$script_date" | grep -o "-"` == "-" ];then
+		elif [ `echo "$script_date" | grep -o "-"` = "-" ];then
 			script_date_min=$(echo "$script_date" | awk -F "-" '{print $1}')
 			script_date_max=$(echo "$script_date" | awk -F "-" '{print $2}')
 			seq_date=$(seq $script_date_min $script_date_max)
@@ -787,7 +787,7 @@ run_script_if() {
 				echo  "${yellow}》》当前时间：$current_time点，不符合你的设置，不自动运行脚本${white}"
 				auto_run="(有合适脚本,但时间不符合不跑)"
 			fi
-		elif [ `echo "$script_date" | grep -o "," | sort -u` == "," ];then
+		elif [ `echo "$script_date" | grep -o "," | sort -u` = "," ];then
 			script_date_convert=$(echo "$script_date" | sed "s/,/ /g")
 			echo "$script_date_convert" | grep -o "$current_time"
 			if [ $? -eq 0 ]; then
@@ -799,7 +799,7 @@ run_script_if() {
 			fi
 		else
 			echo  "script_date的字符：$script_date,进入下级判断"
-			if [ "$action1" == "time" ];then
+			if [ "$action1" = "time" ];then
 				echo "不做任何操作"
 			else
 				run_script
@@ -814,9 +814,9 @@ run_script() {
 		cp -r $checkjs_file/KingRan_Script/function $script_dir
 		cp $checkjs_file/KingRan_Script/JS_USER_AGENTS.js $script_dir
 
-		if [ "$script_ifname1" == "" ];then
+		if [ "$script_ifname1" = "" ];then
 			echo "script_ifname为空"
-		elif [ "$script_ifname1" == "*" ];then
+		elif [ "$script_ifname1" = "*" ];then
 			auto_run="(全部自动运行)"
 			for i in `echo $Add |sed "s/$wrap//g" | sed "s/$wrap_tab//g"`
 			do
@@ -831,21 +831,21 @@ run_script() {
 					ps_num="进程：$run_script_ps_num"
 				fi
 			done
-		elif [ `echo ${script_ifname1} | grep -o "|" |sort -u | wc -l` == "1" ];then
+		elif [ `echo ${script_ifname1} | grep -o "|" |sort -u | wc -l` = "1" ];then
 			url=$(echo $url_test | sed "s/README.md//g")
 			for i in `echo $Add |sed "s/$wrap//g" | sed "s/$wrap_tab//g"`
 			do
-				if [ `echo $i | grep -E "${script_ifname1}" |wc -l` == "1" ];then
+				if [ `echo $i | grep -E "${script_ifname1}" |wc -l` = "1" ];then
 					ps_gua=$(ps -ww | grep "gua_opencard" | grep -v grep | wc -l)
 					ps_kr=$(ps -ww | grep "jd_opencard" | grep -v grep | wc -l)
 
 					grep_gua=$(echo $i | grep -o "gua_opencard")
 					grep_kr=$(echo $i | grep -o "jd_opencard")
 
-					if [ "$ps_gua" -ge "1" ] && [ "$grep_kr" == "jd_opencard" ];then
+					if [ "$ps_gua" -ge "1" ] && [ "$grep_kr" = "jd_opencard" ];then
 						auto_run="(gua的脚本已经在跑，kr的$i先不跑)"
 						echo "没有进程"　>/tmp/run_script_ps.log
-					elif [ "$ps_kr" -ge "1" ] && [ "$grep_gua" == "gua_opencard" ];then
+					elif [ "$ps_kr" -ge "1" ] && [ "$grep_gua" = "gua_opencard" ];then
 						auto_run="(kr的脚本已经在跑，gua的$i先不跑)"
 						echo "没有进程"　>/tmp/run_script_ps.log
 					else
@@ -867,16 +867,16 @@ run_script() {
 			url=$(echo $url_test | sed "s/README.md//g")
 			for i in `echo $Add |sed "s/$wrap//g" | sed "s/$wrap_tab//g"`
 			do
-				if [ `echo $i | grep -E "${script_ifname1}" |wc -l` == "1" ];then
+				if [ `echo $i | grep -E "${script_ifname1}" |wc -l` = "1" ];then
 					ps_gua=$(ps -ww | grep "gua_opencard" | grep -v grep | wc -l)
 					ps_kr=$(ps -ww | grep "jd_opencard" | grep -v grep | wc -l)
 
 					grep_gua=$(echo $i | grep -o "gua_opencard")
 					grep_kr=$(echo $i | grep -o "jd_opencard")
 
-					if [ "$ps_gua" -ge "1" ] && [ "$grep_kr" == "jd_opencard" ];then
+					if [ "$ps_gua" -ge "1" ] && [ "$grep_kr" = "jd_opencard" ];then
 						auto_run="(gua的脚本已经在跑，kr的$i先不跑)"
-					elif [ "$ps_kr" -ge "1" ] && [ "$grep_gua" == "gua_opencard" ];then
+					elif [ "$ps_kr" -ge "1" ] && [ "$grep_gua" = "gua_opencard" ];then
 						auto_run="(kr的脚本已经在跑，gua的$i先不跑)"
 					else
 						auto_run="(个别自动运行)"
@@ -903,7 +903,7 @@ checkjs_config_if() {
 		checkjs_config
 	fi
 
-	if [ `grep -o "$checkjs_config_version" $dir_file/config.txt` == "$checkjs_config_version" ];then
+	if [ `grep -o "$checkjs_config_version" $dir_file/config.txt` = "$checkjs_config_version" ];then
 		echo ""
 	else
 		date_num=$(date +%Y_%m_%d)
@@ -960,7 +960,7 @@ EOF
 for i in `cat /tmp/opencard_variable.txt | grep -v "#"`
 do
 	opencard_variable_if=$(grep "$i" /etc/profile | wc -l )
-	if [ "$opencard_variable_if" == "1" ];then
+	if [ "$opencard_variable_if" = "1" ];then
 		echo ""
 		#echo "开卡变量：$i，已经存在"
 	elif [ "$opencard_variable_if" -gt "1" ];then
@@ -1107,8 +1107,8 @@ export jd_drawCenter_addCart="true" #// 是否做加购任务，默认不做
 
 	docker_id=$(docker ps | grep "tg:0.1" | awk '{print $1}')
 
-	if [ "$tg_if" == "yes" ];then
-		if [ -f $dir_file/tg/tg.py ] && [ ! "$docker_id" == "" ];then
+	if [ "$tg_if" = "yes" ];then
+		if [ -f $dir_file/tg/tg.py ] && [ ! "$docker_id" = "" ];then
 			cp $dir_file/tg.py $dir_file/tg/tg.py
 			docker exec $docker_id /bin/bash -c "export API_ID=$tg_api_id && export API_HASH=$tg_api_hash && python3.7 tg.py"
 			if [ $? -eq 0 ]; then
@@ -1171,7 +1171,7 @@ export jd_drawCenter_addCart="true" #// 是否做加购任务，默认不做
 
 						if [ -z "$variable_script_num" ];then
 							echo "$variable_script_name值：为空不操作"
-						elif [ `echo $variable_script_num| grep "xxxx" | wc -l` == "1" ];then
+						elif [ `echo $variable_script_num| grep "xxxx" | wc -l` = "1" ];then
 							echo "$variable_script_name值：为$variable_script_num不操作"
 						else
 							case "$variable_script_name" in
@@ -1292,7 +1292,7 @@ export jd_drawCenter_addCart="true" #// 是否做加购任务，默认不做
 					echo "$extract_log" > $tg_oldfile
 				fi
 					cron_tg=$(cat $cron_file | grep "#tg0.2#" | wc -l)
-					if [ "$cron_tg" == "0"  ];then
+					if [ "$cron_tg" = "0"  ];then
 						sed -i '/checkjs.sh tg/d' $cron_file >/dev/null 2>&1
 						echo "*/1 * * * * source /etc/profile && $dir_file/checkjs.sh tg >/tmp/checkjs_tg.log 2>&1 #tg0.2#" >>$cron_file
 					else
@@ -1304,7 +1304,7 @@ export jd_drawCenter_addCart="true" #// 是否做加购任务，默认不做
 				mkdir $dir_file/tg
 			fi
 
-			if [ ! "$tg_api_id" == "" ] && [ ! "$tg_api_hash" == "" ];then
+			if [ ! "$tg_api_id" = "" ] && [ ! "$tg_api_hash" = "" ];then
 				# python3.7 -m pip install telethon
 				echo  "$green开始安装tg环境，请稍等，请保证你的docker 也能访问google，不然会失败$white"
 				docker run -d --name tg -i -t -v $dir_file/tg:/usr/share/tg --restart=always itdeskzhang/tg:0.1
