@@ -19,7 +19,9 @@ python3="/usr/bin/python3"
 ListJs_add="ListJs_add.txt"
 ListJs_drop="ListJs_drop.txt"
 
-uname_if=$(cat /etc/profile | grep -o Ubuntu)
+if [ -z $uname_if ];then
+	uname_if=$(cat /etc/profile | grep -o Ubuntu |sort -u)
+fi
 
 if [ "$uname_if" = "Ubuntu" ];then
 	echo "当前环境为ubuntu"
@@ -615,7 +617,7 @@ description_if() {
 }
 
 task() {
-	cron_version="3.2"
+	cron_version="3.3"
 	if [ `grep -o "Checkjs的定时任务$cron_version" $cron_file |wc -l` = "0" ]; then
 		echo "不存在计划任务开始设置"
 		task_delete
@@ -629,9 +631,9 @@ task() {
 task_add() {
 cat >>$cron_file <<EOF
 #**********这里是Checkjs的定时任务$cron_version版本**********#102#
-*/5 * * * * source /etc/profile && $dir_file/checkjs.sh >/tmp/checkjs.log 2>&1 #102#
-45 21 * * * $dir_file/checkjs.sh update_script  >/tmp/checkjs_update_script.log 2>&1 #102#
-45 23 * * * $dir_file/checkjs.sh rm_log 2>&1 #102#
+*/5 * * * * root source /etc/profile && $dir_file/checkjs.sh >/tmp/checkjs.log 2>&1 #102#
+45 21 * * * root $dir_file/checkjs.sh update_script  >/tmp/checkjs_update_script.log 2>&1 #102#
+45 23 * * * root $dir_file/checkjs.sh rm_log 2>&1 #102#
 ###################请将其他定时任务放到底下#########102#
 EOF
 /etc/init.d/cron restart
