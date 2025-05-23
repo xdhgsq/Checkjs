@@ -26,8 +26,10 @@ fi
 if [ "$uname_if" = "Ubuntu" ];then
 	echo "当前环境为ubuntu"
 	cron_file="/etc/cron.d/jd-cron"
+	cron_user="root"
 else
 	cron_file="/etc/crontabs/root"
+	cron_user=""
 fi
 
 #检测当前位置
@@ -617,7 +619,7 @@ description_if() {
 }
 
 task() {
-	cron_version="3.3"
+	cron_version="3.4"
 	if [ `grep -o "Checkjs的定时任务$cron_version" $cron_file |wc -l` = "0" ]; then
 		echo "不存在计划任务开始设置"
 		task_delete
@@ -631,9 +633,9 @@ task() {
 task_add() {
 cat >>$cron_file <<EOF
 #**********这里是Checkjs的定时任务$cron_version版本**********#102#
-*/5 * * * * root source /etc/profile && $dir_file/checkjs.sh >/tmp/checkjs.log 2>&1 #102#
-45 21 * * * root $dir_file/checkjs.sh update_script  >/tmp/checkjs_update_script.log 2>&1 #102#
-45 23 * * * root $dir_file/checkjs.sh rm_log 2>&1 #102#
+*/5 * * * * $cron_user source /etc/profile && $dir_file/checkjs.sh >/tmp/checkjs.log 2>&1 #102#
+45 21 * * * $cron_user $dir_file/checkjs.sh update_script  >/tmp/checkjs_update_script.log 2>&1 #102#
+45 23 * * * $cron_user $dir_file/checkjs.sh rm_log 2>&1 #102#
 ###################请将其他定时任务放到底下#########102#
 EOF
 /etc/init.d/cron restart
