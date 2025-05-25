@@ -26,7 +26,7 @@ fi
 if [ "$uname_if" = "Ubuntu" ];then
 	echo "当前环境为ubuntu"
 	cron_file="/etc/cron.d/jd-cron"
-	cron_user="root"
+	cron_user="root export uname_if="Ubuntu" &&"
 else
 	cron_file="/etc/crontabs/root"
 	cron_user=""
@@ -619,7 +619,7 @@ description_if() {
 }
 
 task() {
-	cron_version="3.4"
+	cron_version="3.5"
 	if [ `grep -o "Checkjs的定时任务$cron_version" $cron_file |wc -l` = "0" ]; then
 		echo "不存在计划任务开始设置"
 		task_delete
