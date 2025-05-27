@@ -691,8 +691,8 @@ time(){
 script() {
 	Github_6dylan6_Script
 	faker2
-	faker3
-	faker4
+	#faker3
+	#faker4
 	rm -rf $dir_file/$Script_name/KingRan_Script
 	rm -rf $dir_file/$Script_name/JDHelloWorld
 	rm -rf $dir_file/$Script_name/smiek2221_Script
