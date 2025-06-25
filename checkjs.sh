@@ -730,9 +730,6 @@ menu() {
 	script
 
 	if [ $(date +%H%M) = "1200" ];then
-		echo "12点开始推送今天的github更新记录"
-		That_day_sendMessage
-	elif [ $(date +%H%M) = "2200" ];then
 		echo "22点开始推送今天的github更新记录"
 		That_day_sendMessage
 	fi
